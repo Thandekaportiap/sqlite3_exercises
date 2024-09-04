@@ -18,8 +18,9 @@ function App() {
   return (
     <>
       <div>
-        This is data from my API 
-        brand {localData.brand}
+        This is data from my API <br/>
+        brand: {localData.brand}
+        Year : {localData.year}
       </div>
       
     </>
