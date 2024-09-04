@@ -1,43 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Edit from '../pages/edit';
+import { Link, useParams } from 'react-router-dom'
 
 const card = ({data, setEditName,setEditAge, handleEditClick,deleteUser,setEditUserId,updateUser, editUserId,
 
     editName,editAge }) => {
+
+
+          
     
   return (
     <>
-     <div className="w3-card-4" style={{width:"100%", }}>
-    <header className="w3-container w3-blue">
+     <div className="w3-card-4" style={{width:"100%",height:"30vh",}}>
+    <header className="w3-container w3-blue" style={{height:"10vh"}}>
       <h1>{data.name}</h1>
     </header>
 
-    <div className="w3-container">
+    <div className="w3-container" style={{height:"10vh"}}>
       {data.id}
     </div>
 
-    <footer className="w3-container w3-blue">
-    {editUserId === data.id ? (
-                            <>
-                                <input
-                                    type="text"
-                                    value={editName}
-                                    onChange={(e) => setEditName(e.target.value)}
-                                />
-                                <input
-                                    type="number"
-                                    value={editAge}
-                                    onChange={(e) => setEditAge(e.target.value)}
-                                />
-                                <button onClick={() => updateUser(data.id)}>Update</button>
-                                <button onClick={() => setEditUserId(null)}>Cancel</button>
-                            </>
-                        ) : (
-                            <>
-                                <button onClick={() => handleEditClick(data)}>Edit</button>
-                                <button onClick={() => deleteUser(data.id)}>Delete</button>
-                            </>
-                        )}
+    <footer className="w3-container w3-blue" style={{height:"10vh"}}>
+   {/* <Edit  
+   data={data} setEditName={setEditName}
+                  setEditAge={setEditAge}
+                  handleEditClick={handleEditClick}
+                  deleteUser={deleteUser}
+                  setEditUserId={setEditUserId}
+                  updateUser={updateUser}
+                  editUserId={editUserId}
+                  editName={editName}
+                  editAge={editAge}/> */}
+
+<Link to={`${data.id}`}><button onClick={() => handleEditClick(data)} className="w3-button w3-green">Edit</button></Link>
+
+<button onClick={() => deleteUser(data.id)} className="w3-button w3-red">Delete</button>
         </footer>
   </div>
     </>
