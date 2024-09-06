@@ -3,6 +3,8 @@ const cors = require('cors');
 const morgan = require('morgan');
 const db = require('better-sqlite3')('database.db');
 const sqlite3 = require('sqlite3').verbose();
+const bcrypt = require('bcrypt');
+
 
 const app = express();
 app.use(cors())
@@ -24,13 +26,15 @@ app.use((req, res, next) => {
 
 
 //register
-app.post('/api/validate', (req, res) => {
+app.post('/api/validate', async(req, res) => {
     const { username, password } = req.body;
+    
+
     const sql = `
         INSERT INTO validation (username, password)
         VALUES (?, ?)
     `;
-    const info = db.prepare(sql).run(username, password);
+    const info = dbs.prepare(sql).run(username, password);
     res.status(201).json({ id: info.lastInsertRowid });
 });
 

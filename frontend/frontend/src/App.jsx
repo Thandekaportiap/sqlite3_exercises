@@ -10,6 +10,7 @@ import NoPage from './pages/noPage';
 import AddUser from './pages/addUser';
 import Edit from './pages/edit';
 import Login from './components/login';
+import Register from './components/register';
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
           </Route>
           <Route path="/addUser" element={<AddUser />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="*" element={<NoPage />} />
 
       </Routes>
