@@ -2,13 +2,57 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const db = require('better-sqlite3')('database.db');
+const sqlite3 = require('sqlite3').verbose();
 
 const app = express();
 app.use(cors())
 app.use(express.json())
 app.use(morgan('tiny'))
 
-// const port = 3001;
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    next();
+    });
+    app.use(express.json({limit:'10mb'}))
+
+    let dbs = new sqlite3.Database('credentials.db' , (err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('connected to the access database')
+    })
+
+
+//register
+app.post('/api/validate', (req, res) => {
+    const { username, password } = req.body;
+    const sql = `
+        INSERT INTO validation (username, password)
+        VALUES (?, ?)
+    `;
+    const info = db.prepare(sql).run(username, password);
+    res.status(201).json({ id: info.lastInsertRowid });
+});
+
+// login
+app.post('/validatePassword', (req,res) => {
+    const {username , password} = req.body
+
+    dbs.all (`select * from validation where username = '${username}' and password = '${password}'`, (err , rows) => {
+      if(err){
+        throw err;
+      }  
+      if(rows.length > 0){
+        res.send({validation: true})
+      }else {
+        res.send({validation:false})
+      }
+    })
+})
+
+
+
+
 
 // Create the table
 const createTable = () => {
@@ -33,6 +77,7 @@ app.post('/users', (req, res) => {
     const info = db.prepare(sql).run(name, age);
     res.status(201).json({ id: info.lastInsertRowid });
 });
+
 
 // Get all users
 app.get('/users', (req, res) => {

@@ -8,8 +8,8 @@ import GetAllusers from './components/getAllusers'
 import Footer from './components/footer';
 import NoPage from './pages/noPage';
 import AddUser from './pages/addUser';
-import Layout from './pages/layout';
 import Edit from './pages/edit';
+import Login from './components/login';
 
 
 function App() {
@@ -36,7 +36,7 @@ function App() {
             <Route path=":id" element={<Edit data={localData}/>}/>
           </Route>
           <Route path="/addUser" element={<AddUser />} />
-          {/* <Route path="contact" element={<Contact />} /> */}
+          <Route path="/login" element={<Login />} />
           <Route path="*" element={<NoPage />} />
 
       </Routes>
